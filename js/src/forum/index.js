@@ -132,6 +132,7 @@ app.initializers.add('devmindslab-link-redirect-confirm', () => {
   const whitelistSetting =
     (app.forum && app.forum.attribute && app.forum.attribute('linkRedirectConfirmWhitelist')) ||
     (app.data && app.data.attributes && app.data.attributes.linkRedirectConfirmWhitelist) ||
+    (app.data && app.data.settings && app.data.settings['devmindslab-link-redirect-confirm.whitelist']) ||
     '';
   const whitelist = parseWhitelist(whitelistSetting).concat([baseHost]);
 
