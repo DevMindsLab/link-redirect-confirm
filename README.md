@@ -21,6 +21,12 @@ By default, the forum's own domain is always allowed.
 ## Whitelist behavior
 Whitelisted domains skip the confirmation modal and open in the same tab. Non-whitelisted external links show the modal and open in a new tab after confirmation.
 
+If you want whitelisted external links to also open in a new tab, you can optionally combine this extension with the Flarum extension walsgit/external-links-in-new-tab.
+
+That extension forces all external links to open in a new tab and works well together with this confirmation extension.
+
+You can install it via Composer using `composer require walsgit/external-links-in-new-tab`.
+
 ## Styling
 You can fully customize the modal via LESS variables, e.g.:
 - `--link-redirect-confirm-modal-max-width`
