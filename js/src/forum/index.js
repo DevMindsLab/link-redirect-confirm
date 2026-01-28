@@ -117,7 +117,7 @@ app.initializers.add('devmindslab-link-redirect-confirm', () => {
     (app.forum && app.forum.attribute && app.forum.attribute('linkRedirectConfirmWhitelist')) ||
     (app.data && app.data.attributes && app.data.attributes.linkRedirectConfirmWhitelist) ||
     '';
-  const whitelist = parseWhitelist(whitelistSetting).concat(['rene-baumgarten.de', baseHost]);
+  const whitelist = parseWhitelist(whitelistSetting).concat([baseHost]);
 
   document.addEventListener(
     'click',

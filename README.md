@@ -23,7 +23,7 @@ npm run build
 ## Configuration
 Set a whitelist in the Admin panel (comma-separated). Wildcards are supported via `*.example.org`.
 
-By default, the forum's own domain and `rene-baumgarten.de` are always allowed.
+By default, the forum's own domain is always allowed.
 
 ## Styling
 You can fully customize the modal via LESS variables, e.g.:
