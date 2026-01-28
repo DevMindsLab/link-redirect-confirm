@@ -38,24 +38,22 @@ class ConfirmExternalLinkModal extends Modal {
             },
             app.translator.trans('devmindslab-link-redirect-confirm.forum.modal.cancel')
           )}
-          {Button.component(
-            {
-              className: 'Button Button--primary',
-              onclick: () => this.confirm(),
-            },
-            app.translator.trans('devmindslab-link-redirect-confirm.forum.modal.confirm')
-          )}
+          <a
+            className="Button Button--primary"
+            href={this.url || '#'}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-no-redirect-confirm="1"
+            onclick={() => this.hide()}
+          >
+            {app.translator.trans('devmindslab-link-redirect-confirm.forum.modal.confirm')}
+          </a>
         </div>
       </div>
     );
   }
 
-  confirm() {
-    if (!this.url) return;
-    window.open(this.url, '_blank', 'noopener,noreferrer');
-
-    this.hide();
-  }
+  // Opening is handled by the confirm button link (real <a>).
 }
 
 function getForumBaseUrl() {
@@ -73,6 +71,15 @@ function parseWhitelist(raw) {
     .split(/[,\s]+/)
     .map((s) => s.trim())
     .filter(Boolean);
+}
+
+function getWhitelistSetting() {
+  return (
+    (app.forum && app.forum.attribute && app.forum.attribute('linkRedirectConfirmWhitelist')) ||
+    (app.data && app.data.attributes && app.data.attributes.linkRedirectConfirmWhitelist) ||
+    (app.data && app.data.settings && app.data.settings['devmindslab-link-redirect-confirm.whitelist']) ||
+    ''
+  );
 }
 
 function normalizeWhitelistEntry(entry) {
@@ -129,13 +136,6 @@ app.initializers.add('devmindslab-link-redirect-confirm', () => {
     baseHost = window.location.hostname;
   }
 
-  const whitelistSetting =
-    (app.forum && app.forum.attribute && app.forum.attribute('linkRedirectConfirmWhitelist')) ||
-    (app.data && app.data.attributes && app.data.attributes.linkRedirectConfirmWhitelist) ||
-    (app.data && app.data.settings && app.data.settings['devmindslab-link-redirect-confirm.whitelist']) ||
-    '';
-  const whitelist = parseWhitelist(whitelistSetting).concat([baseHost]);
-
   document.addEventListener(
     'click',
     (event) => {
@@ -151,7 +151,13 @@ app.initializers.add('devmindslab-link-redirect-confirm', () => {
 
       if (!['http:', 'https:'].includes(url.protocol)) return;
 
-      if (!isExternalLink(url, baseHost, whitelist)) return;
+      const whitelistSetting = getWhitelistSetting();
+      const whitelist = parseWhitelist(whitelistSetting).concat([baseHost]);
+
+      const isExternal = isExternalLink(url, baseHost, whitelist);
+      if (!isExternal) return;
+
+      if (isWhitelisted(url.hostname, whitelist)) return;
 
       event.preventDefault();
       event.stopPropagation();

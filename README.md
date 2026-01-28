@@ -18,6 +18,9 @@ Set a whitelist in the Admin panel (comma-separated). Wildcards are supported vi
 
 By default, the forum's own domain is always allowed.
 
+## Whitelist behavior
+Whitelisted domains skip the confirmation modal and open in the same tab. Non-whitelisted external links show the modal and open in a new tab after confirmation.
+
 ## Styling
 You can fully customize the modal via LESS variables, e.g.:
 - `--link-redirect-confirm-modal-max-width`
