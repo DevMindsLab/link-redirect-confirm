@@ -13,13 +13,6 @@ This extension shows a confirmation modal before opening external links posted a
 composer require devmindslab/link-redirect-confirm
 ```
 
-## Build front-end assets
-```
-cd js
-npm install
-npm run build
-```
-
 ## Configuration
 Set a whitelist in the Admin panel (comma-separated). Wildcards are supported via `*.example.org`.
 
