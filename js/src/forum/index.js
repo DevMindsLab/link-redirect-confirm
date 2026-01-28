@@ -75,9 +75,25 @@ function parseWhitelist(raw) {
     .filter(Boolean);
 }
 
+function normalizeWhitelistEntry(entry) {
+  if (!entry) return '';
+  let value = entry.trim();
+
+  // Strip scheme if provided
+  value = value.replace(/^https?:\/\//i, '');
+
+  // Drop any path/query/fragment/port
+  value = value.split('/')[0];
+  value = value.split('?')[0];
+  value = value.split('#')[0];
+
+  return value.trim();
+}
+
 function hostnameMatches(hostname, entry) {
   if (!entry) return false;
-  const clean = entry.replace(/^\*\./, '').toLowerCase();
+  const normalized = normalizeWhitelistEntry(entry);
+  const clean = normalized.replace(/^\*\./, '').toLowerCase();
   const host = hostname.toLowerCase();
   return host === clean || host.endsWith(`.${clean}`);
 }
