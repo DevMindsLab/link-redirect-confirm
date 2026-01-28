@@ -141,7 +141,6 @@ app.initializers.add('devmindslab-link-redirect-confirm', () => {
 
       app.modal.show(ConfirmExternalLinkModal, {
         url: url.href,
-        target: getTarget(anchor, event),
       });
     },
     true
