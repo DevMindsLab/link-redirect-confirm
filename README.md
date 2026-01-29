@@ -27,6 +27,11 @@ That extension forces all external links to open in a new tab and works well tog
 
 You can install it via Composer using `composer require walsgit/external-links-in-new-tab`.
 
+## Translations
+The extension ships with German and English translations located in `resources/locale/de.yml` and `resources/locale/en.yml`.
+
+Additional languages can easily be added by copying `en.yml` and translating the strings.
+
 ## Styling
 You can fully customize the modal via LESS variables, e.g.:
 - `--link-redirect-confirm-modal-max-width`
